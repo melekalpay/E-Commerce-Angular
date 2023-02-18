@@ -1,0 +1,31 @@
+{
+    "data": [
+        {
+            "id": "0",
+            "name": "Siyah Pantolon",
+            "description": "Düz Siyah Pantolon",
+            "image": "https://www.gizce.com/image/cache/catalog/products_2021/balen/3I4A9234-800x1200.jpg",
+            "price": 65,
+            "amount": 1,
+            "stok" : 5
+        },
+        {
+            "id": "1",
+            "name": "Gomlek",
+            "description": "Kareli Gomlek",
+            "image": "https://vakko.akinoncdn.com/products/2020/11/30/720952/56a2f650-570f-44c1-8f58-4dc98a0cdb91.jpg",
+            "price": 75,
+            "amount": 1,
+            "stok" : 3
+        },
+        {
+            "id": "2",
+            "name": "Ayakkabı",
+            "description": "Vans",
+            "image": "https://cdn.cimri.io/pictures/article/original/34/34395.jpg",
+            "price": 100,
+            "amount": 1,
+            "stok" : 4
+        }
+    ]
+}

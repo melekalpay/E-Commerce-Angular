@@ -1,0 +1,88 @@
+<p-toast></p-toast>
+<div class="card">
+
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                    (click)="openNew()"></button>
+            <button pButton pRipple label="Go to User" icon="pi pi-user" class="p-button-success mr-2"
+                    (click)="redirectUser()"></button>
+        </ng-template>
+    </p-toolbar>
+    <p-table #dt [value]="products" [rows]="10" [paginator]="true" [tableStyle]="{'min-width': '75rem'}"
+             [rowHover]="true" dataKey="id"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+             [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage Products</h5>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name" style="min-width:15rem">Name
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th>Image</th>
+                <th pSortableColumn="price">Price
+                    <p-sortIcon field="price"></p-sortIcon>
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.name}}</td>
+                <td><img [src]="product.image" [alt]="product.name" width="100" class="shadow-4"/></td>
+                <td>{{product.price | currency:'USD'}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{products ? products.length : 0 }} products.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true"
+          styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <img [src]="product.image" [alt]="product.image" class="product-image" *ngIf="product.image">
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus/>
+            <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small>
+        </div>
+        <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" pInputTextarea [(ngModel)]="product.description" required rows="3"
+                      cols="20"></textarea>
+        </div>
+
+        <div class="field">
+            <label for="price">Price</label>
+            <input id="price"  pInputText [(ngModel)]="product.price" mode="currency" currency="USD"
+                   locale="en-US"/>
+        </div>
+        <div class="field">
+            <label for="amount">Amount</label>
+            <p-inputNumber id="amount" [(ngModel)]="product.amount"></p-inputNumber>
+        </div>
+        <div class="field">
+            <label for="stok">Stok</label>
+            <p-inputNumber id="stok" [(ngModel)]="product.stok"></p-inputNumber>
+        </div>
+        <div class="field">
+            <label for="image">Image</label>
+            <input id="image" pInputText [(ngModel)]="product.image"/>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

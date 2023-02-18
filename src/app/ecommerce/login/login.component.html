@@ -1,0 +1,20 @@
+<div class="card ">
+    <div style="text-align:center">
+        <h5>Login</h5>
+    </div>
+    <div class="p-fluid">
+        <div class="field">
+            <div class="field">
+                <label for="username">Username</label>
+                <input pInputText id="username" type="text" [(ngModel)]="username"/>
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input pInputText id="password" type="password" [(ngModel)]="password"/>
+            </div>
+            <p-button label="Login" (onClick)="redirectAdmin()"></p-button>
+        </div>
+    </div>
+</div>
+
+
