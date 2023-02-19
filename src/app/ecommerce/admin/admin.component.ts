@@ -28,6 +28,7 @@ export class AdminComponent implements OnInit{
     }
 
     ngOnInit() {
+
         this.productService.getUrun().then(data => {
             this.products = data;
         });
@@ -71,10 +72,10 @@ export class AdminComponent implements OnInit{
                 });
             }
 
-            // @ts-ignore
             this.products = [...this.products];
-            this.productDialog = false;
             this.product = {};
+            this.productDialog = false;
+
         }
     }
 

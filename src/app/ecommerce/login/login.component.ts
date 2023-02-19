@@ -13,16 +13,21 @@ export class LoginComponent {
     password: any;
 
     constructor(private router: Router) {
+        // @ts-ignore
+        localStorage.setItem('userType',null)
     }
 
     redirectAdmin(): void {
         if (this.username == "admin" && this.password == "admin") {
-            this.router.navigate(['/admin']);
+            localStorage.setItem('userType',this.username)
+            this.router.navigate(['admin'])
         } else if (this.username == "user" && this.password == "user") {
-            this.router.navigate(['/user']);
+            localStorage.setItem('userType',this.username)
+            this.router.navigate(['user'])
         } else {
             alert("Wrong Password or Username")
         }
     }
+
 
 }
