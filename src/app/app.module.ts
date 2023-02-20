@@ -30,6 +30,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {AdminModule} from "./ecommerce/admin/admin.module";
 import {UserModule} from "./ecommerce/user/user.module";
 import {CardModule} from "./ecommerce/shoppingcard/card.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -56,7 +57,8 @@ import {CardModule} from "./ecommerce/shoppingcard/card.module";
         RippleModule,
         ChipsModule,
         InputTextareaModule,
-        CardModule
+        CardModule,
+        HttpClientModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

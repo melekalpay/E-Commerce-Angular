@@ -1,10 +1,22 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../api/product';
 import {Urun} from "../../ecommerce/model/urun";
+import {environment} from "../../../environments/environment";
+import {log10} from "chart.js/helpers";
+import {Observable, tap, throwError} from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ProductService {
+
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+        }),
+    };
+
+    private apiUrl = environment.apiBaseUrl;
 
     constructor(private http: HttpClient) { }
 
@@ -42,4 +54,18 @@ export class ProductService {
             .then(res => res.data as Urun[])
             .then(data => data);
     }
+
+    getMysqlData(): Observable<Urun[]>{
+        return this.http.get<Urun[]>(`${this.apiUrl}product/all`)
+    }
+
+    saveData(urun : Urun) : Observable<Object>{
+        console.log(urun)
+        console.log(`${this.apiUrl}product/save`);
+        let body = JSON.stringify(urun);
+        return this.http.post<Urun>(`${this.apiUrl}product/save`, urun);
+    }
+
+
+
 }

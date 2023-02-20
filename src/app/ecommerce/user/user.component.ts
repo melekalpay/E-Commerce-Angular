@@ -46,8 +46,11 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        this.productService.getMysqlData().subscribe((resp : Urun[]) => this.products = resp)
+        console.log(this.products)
         // @ts-ignore
-        this.products= JSON.parse(localStorage.getItem('datas')) //local storagedan çekmek için
+       // this.products= JSON.parse(localStorage.getItem('datas')) //local storagedan çekmek için
         this.cardItemFunc();
 
     }
@@ -96,6 +99,7 @@ export class UserComponent implements OnInit {
             // @ts-ignore
             this.itemsCard = JSON.parse(localStorage.getItem('localCard'))
             for (let i = 0; i < this.itemsCard.length; i++) {
+                // @ts-ignore
                 if (parseInt(<string>idCard) === parseInt(this.itemsCard[i].id)) {
                     this.itemsCard[i].amount = category.amount
                     index = i
