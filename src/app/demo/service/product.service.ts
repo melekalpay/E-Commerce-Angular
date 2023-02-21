@@ -60,12 +60,11 @@ export class ProductService {
     }
 
     saveData(urun : Urun) : Observable<Object>{
-        console.log(urun)
-        console.log(`${this.apiUrl}product/save`);
-        let body = JSON.stringify(urun);
         return this.http.post<Urun>(`${this.apiUrl}product/save`, urun);
     }
 
-
+    deleteData(id : number) : Observable<void>{
+        return  this.http.delete<void>(`${this.apiUrl}product/delete/${id}`);
+    }
 
 }

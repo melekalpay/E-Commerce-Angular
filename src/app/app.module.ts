@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {CurrencyPipe, HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {CurrencyPipe, HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -61,7 +61,7 @@ import {HttpClientModule} from "@angular/common/http";
         HttpClientModule
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService
     ],
