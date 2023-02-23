@@ -6,6 +6,7 @@ import {environment} from "../../../environments/environment";
 import {log10} from "chart.js/helpers";
 import {Observable, tap, throwError} from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import {Basket} from "../../ecommerce/model/basket";
 
 @Injectable()
 export class ProductService {
@@ -66,5 +67,22 @@ export class ProductService {
     deleteData(id : number) : Observable<void>{
         return  this.http.delete<void>(`${this.apiUrl}product/delete/${id}`);
     }
+
+    getBasketData(): Observable<Basket[]>{
+        return this.http.get<Basket[]>(`${this.apiUrl}basket/all`)
+    }
+    saveBasket(basket : Basket) : Observable<Object>{
+        return this.http.post<Basket>(`${this.apiUrl}basket/save`, basket);
+    }
+
+    deleteBasket(id : number) : Observable<void>{
+        return  this.http.delete<void>(`${this.apiUrl}basket/delete/${id}`);
+    }
+
+    deleteAllBasket(basket : Basket[]) : Observable<Basket[]>{
+        return  this.http.post<Basket[]>(`${this.apiUrl}basket/delete/all`,basket);
+    }
+
+
 
 }

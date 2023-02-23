@@ -1,7 +1,7 @@
 <section class="cart_section">
     <div class="container">
         <h2>Cart</h2>
-        <div *ngIf="getCartDetails">
+        <div *ngIf="basketItems">
             <table>
                 <tr>
                     <th>Image</th>
@@ -11,27 +11,29 @@
                     <th>Remove Item</th>
                 </tr>
                 <tr
-                    *ngFor="let getCartDetail of getCartDetails">
+                    *ngFor="let getCartDetail of basketItems">
+
                     <td>
-                        <img [src]="getCartDetail.image" [alt]="getCartDetail.name" width="100" class="shadow-4"/>
+                            <img [src]="getCartDetail.product?.image!" width="100" class="shadow-4"/>
+
                     </td>
                     <td>
-                        {{getCartDetail.price}} $
+                            {{getCartDetail.product?.price!}} $
+
                     </td>
                     <td>
-                        <div class="content">
                             <p-button icon="pi pi-plus"
-                                      (click)="incQnt({prodId : getCartDetail.id, qnt : getCartDetail.amount})"></p-button>
-                            {{getCartDetail.amount}}
+                                      (click)="incQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.product?.amount!})"></p-button>
+                            {{getCartDetail.product?.amount}}
                             <p-button icon="pi pi-minus"
-                                      (click)="decQnt({prodId : getCartDetail.id, qnt : getCartDetail.amount})"></p-button>
-                        </div>
+                                      (click)="decQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.product?.amount!})"></p-button>
+
                     </td>
                     <td>
-                        {{getCartDetail.amount * getCartDetail.price|number}} $
+                            {{getCartDetail.product?.amount! * getCartDetail.product?.price!|number}} $
                     </td>
                     <td>
-                        <p-button icon="pi pi-trash" (click)="singleDelete(getCartDetail.id )"></p-button>
+                        <p-button icon="pi pi-trash" (click)="singleDelete(getCartDetail?.id! )"></p-button>
                     </td>
                 </tr>
             </table>

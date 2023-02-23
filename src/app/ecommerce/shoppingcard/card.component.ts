@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../auth/auth.service";
+import {ProductService} from "../../demo/service/product.service";
+import {Basket} from "../model/basket";
+import {Urun} from "../model/urun";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'app-card',
@@ -10,91 +14,100 @@ import {AuthService} from "../../auth/auth.service";
 })
 export class CardComponent {
 
-    constructor(private auth: AuthService) {
+    basketItems! : Basket[];
+    selectedProducts!: Basket[];
+
+    constructor(private auth: AuthService,private productService:ProductService) {
+
     }
 
     ngOnInit(): void {
-        this.CartDetails();
-        this.loadCart();
-    }
+        this.productService.getBasketData().subscribe((resp : Basket[]) => {this.basketItems = resp
+            console.log(this.basketItems)
+            this.loadCart();
 
-    getCartDetails: any = [];
-
-    CartDetails() {
-        if (localStorage.getItem('localCard')) {
-            // @ts-ignore
-            this.getCartDetails = JSON.parse(localStorage.getItem('localCard'));
-        }
+        })
     }
 
     incQnt({prodId, qnt}: { prodId: any, qnt: any }) {
-        for (let i = 0; i < this.getCartDetails.length; i++) {
-            if (this.getCartDetails[i].id === prodId) {
-                if (qnt != 5)
-                    this.getCartDetails[i].amount = parseInt(qnt) + 1;
+        for (let i = 0; i < this.basketItems.length; i++) {
+            // @ts-ignore
+            if (this.basketItems[i].product.id === prodId) {
+                // @ts-ignore
+                if (qnt != this.basketItems[i].product.stok )
+                    { // @ts-ignore
+                        this.basketItems[i].product.amount = parseInt(qnt) + 1;
+                    }
             }
         }
-        localStorage.setItem('localCard', JSON.stringify(this.getCartDetails));
         this.loadCart();
+        console.log(this.selectedProducts )
     }
 
     decQnt({prodId, qnt}: { prodId: any, qnt: any }) {
-        for (let i = 0; i < this.getCartDetails.length; i++) {
-            if (this.getCartDetails[i].id === prodId) {
+        for (let i = 0; i < this.basketItems.length; i++) {
+            // @ts-ignore
+            if (this.basketItems[i].product.id === prodId) {
                 if (qnt != 1)
-                    this.getCartDetails[i].amount = parseInt(qnt) - 1;
+                    {
+                        this.decreaseLoadCart();
+                        // @ts-ignore
+                        this.basketItems[i].product.amount = parseInt(qnt) - 1;
+                    }
             }
         }
-        localStorage.setItem('localCard', JSON.stringify(this.getCartDetails));
-        this.loadCart();
     }
 
     total: number = 0;
 
     loadCart() {
-        if
-        (localStorage.getItem('localCard')) {
-            // @ts-ignore
-            this.getCartDetails = JSON.parse(localStorage.getItem('localCard'));
-            this.total = this.getCartDetails.reduce(function (acc: any, val: any) {
-                return acc + (val.price * val.amount);
-            }, 0);
+        if (this.basketItems) {
+            this.basketItems.forEach(v => {
+               this.total =( v.product?.amount! * v.product?.price!);
+                console.log(this.total)
+            })
         }
     }
 
-    removeall() {
-        localStorage.removeItem
-        ('localCard');
-        this.getCartDetails = [];
-        this.total = 0;
-        this.cartNumber = 0;
-        this.auth.cartSubject.next
-        (this.cartNumber);
-    }
-
-    singleDelete(getCartDetail: number) {
-        console.log(getCartDetail);
-        if (localStorage.getItem('localCard')) {
-            // @ts-ignore
-            this.getCartDetails = JSON.parse(localStorage.getItem('localCard'));
-            for (let i = 0; i < this.getCartDetails.length; i++) {
-                if (this.getCartDetails[i].id === getCartDetail) {
-                    this.getCartDetails.splice(i, 1);
-                    localStorage.setItem('localCard', JSON.stringify(this.getCartDetails));
-                    this.loadCart();
-                    this.cartNumberFunc();
+    decreaseLoadCart() {
+        if (this.basketItems) {
+            this.basketItems.forEach(v => {
+                if(v.product?.amount! >= 1){
+                    this.total -= v.product?.price!;
+                    console.log(this.total)
                 }
-            }
+                else {
+                    this.total = v.product?.price!;
+                }
+            })
         }
     }
 
-    cartNumber: number = 0;
-
-    cartNumberFunc() {
-        // @ts-ignore
-        var cartValue = JSON.parse(localStorage.getItem('localCard'));
-        this.cartNumber = cartValue.length;
-        this.auth.cartSubject.next
-        (this.cartNumber);
+    getBasketAll() : void {
+        this.productService.getBasketData().subscribe((resp : Basket[]) => this.basketItems = resp)
     }
+
+     removeall() {
+         this.productService.deleteAllBasket(this.basketItems).subscribe(
+             (response : Basket[]) => {
+                 console.log(response)
+                 this.getBasketAll();
+                 this.total=0;
+             },
+             (error:HttpErrorResponse) => {
+                 alert(error.message)
+             }
+         )
+     }
+
+    singleDelete(id: number) {
+       this.productService.deleteBasket(id).subscribe(
+           (resp : void) => {
+               console.log(resp)
+           },
+           (error:HttpErrorResponse) => {
+               alert(error.message)}
+       )
+    }
+
 }

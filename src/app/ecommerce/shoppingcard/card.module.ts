@@ -9,6 +9,8 @@ import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CheckboxModule} from "primeng/checkbox";
+import {TableModule} from "primeng/table";
 
 
 
@@ -26,7 +28,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         MatInputModule,
         MatButtonModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        CheckboxModule,
+        TableModule
     ]
 })
 export class CardModule { }
