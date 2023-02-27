@@ -67,11 +67,15 @@ export class ProductService {
     deleteData(id : number) : Observable<void>{
         return  this.http.delete<void>(`${this.apiUrl}product/delete/${id}`);
     }
+    findByIdData(id : number) : Observable<Object>{
+        return  this.http.get<Urun>(`${this.apiUrl}product/findById/${id}`);
+    }
 
     getBasketData(): Observable<Basket[]>{
         return this.http.get<Basket[]>(`${this.apiUrl}basket/all`)
     }
     saveBasket(basket : Basket) : Observable<Object>{
+
         return this.http.post<Basket>(`${this.apiUrl}basket/save`, basket);
     }
 
@@ -81,6 +85,10 @@ export class ProductService {
 
     deleteAllBasket(basket : Basket[]) : Observable<Basket[]>{
         return  this.http.post<Basket[]>(`${this.apiUrl}basket/delete/all`,basket);
+    }
+
+    setQuantity(basket : Basket , amount : number) :Observable<void>{
+        return  this.http.post<void>(`${this.apiUrl}setQuantity/${amount}`,basket);
     }
 
 

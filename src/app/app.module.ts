@@ -31,6 +31,7 @@ import {AdminModule} from "./ecommerce/admin/admin.module";
 import {UserModule} from "./ecommerce/user/user.module";
 import {CardModule} from "./ecommerce/shoppingcard/card.module";
 import {HttpClientModule} from "@angular/common/http";
+import {ProductDetailModule} from "./ecommerce/productdetails/productdetail.module";
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import {HttpClientModule} from "@angular/common/http";
         ChipsModule,
         InputTextareaModule,
         CardModule,
-        HttpClientModule
+        HttpClientModule,
+        ProductDetailModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },

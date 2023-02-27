@@ -8,6 +8,7 @@ import {J} from "@angular/cdk/keycodes";
 import {AuthService} from "../../auth/auth.service";
 import {Basket} from "../model/basket";
 import {log10} from "chart.js/helpers";
+import {SelectItem} from "primeng/api";
 
 @Component({
     selector: 'app-user',
@@ -15,21 +16,18 @@ import {log10} from "chart.js/helpers";
 })
 export class UserComponent implements OnInit {
 
+    sortOrder!: number;
+
+    sortField!: string;
 
     products!: Urun[];
 
+
     items: any = [];
 
-    cardItem: number = 0;
-
-    urun!: Urun;
-
-    basketItems!: Basket[];
 
 
     constructor(private productService: ProductService, private router: Router) {
-        this.productService.getBasketData().subscribe((resp : Basket[]) => {this.basketItems = resp
-            this.cardItem =this.basketItems.length;})
     }
 
 
@@ -39,24 +37,8 @@ export class UserComponent implements OnInit {
 
     }
 
-    redirectCard() {
-        this.router.navigate(['/card']);
+
+    GoToProduct(product : any) {
+        this.router.navigate(['product',product.id]);
     }
-
-
-    productDialog!: boolean;
-
-    showDetail(product: Urun) {
-        this.urun = {...product};
-        this.productDialog = true;
-    }
-
-
-    addToSepet(category: Urun){
-        this.productService.saveBasket(category).subscribe((data:  any) => {
-            console.log(data)
-        })
-
-}
-
 }

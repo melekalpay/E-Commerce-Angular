@@ -1,77 +1,123 @@
 <div class="card">
-    <p-menubar [model]="items">
-
-        <div class="align-items-center" style="float: right ">
-
-            <button pButton class="mr-4" icon="pi pi-fw pi-shopping-cart" (click)="redirectCard()">
-                <label class="ml-3">{{cardItem}}</label></button>
-        </div>
-    </p-menubar>
-    <p-table [value]="products" [rows]="10" [paginator]="true" [tableStyle]="{'min-width': '75rem'}"
-             [rowHover]="true" dataKey="id"
-             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-             [showCurrentPageReport]="true">
-        <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                Products
-            </div>
-        </ng-template>
-        <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Products</h5>
-            </div>
-        </ng-template>
+    <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="name"
+                [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
         <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="name" style="min-width:15rem">Name
-                    <p-sortIcon field="name"></p-sortIcon>
-                </th>
-                <th pSortableColumn="image" style="min-width:15rem">Image
-                    <p-sortIcon field="image"></p-sortIcon>
-                </th>
-                <th pSortableColumn="price">Price
-                    <p-sortIcon field="price">Price</p-sortIcon>
-                </th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td>{{product.name}}</td>
-                <td><img [src]="product.image" [alt]="product.name" width="100" class="shadow-4"/></td>
-                <td>{{product.price | currency:'USD'}}</td>
-                <td>
-                    <p-button icon="pi pi-chevron-right" (click)="showDetail(product)" label="Details"></p-button>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-between">
-                In total there are {{products ? products.length : 0 }} products.
+            <div class="flex flex-column md:flex-row md:justify-content-between">
+                <span class="p-input-icon-left mb-2 md:mb-0">
+                    <i class="pi pi-search"></i>
+                    <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($any($event.target).value)">
+                </span>
             </div>
         </ng-template>
-    </p-table>
+
+        <ng-template let-product pTemplate="gridItem">
+            <div class="col-12 md:col-4" >
+                <div class="product-grid-item card">
+                    <div class="product-grid-item-content">
+                        <div >
+                            <a (click)="GoToProduct(product)">
+                                <img [src]="product.image"
+                                     [alt]="product.name" width="200" class="shadow-4"/></a>
+                        </div>
+                        <div class="product-name">{{product.name}}</div>
+                        <div class="product-description">{{product.description}}</div>
+                    </div>
+                    <div class="product-grid-item-bottom">
+                        <span class="product-price">${{product.price}}</span>
+<!--                        <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>-->
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
 </div>
 
-<p-dialog [(visible)]="productDialog" [style]="{width: '1000px'}" header="Product Details" [modal]="true"
-          styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <div class="field">
-            <img [src]="urun.image" [alt]="urun.image" class="product-image" *ngIf="urun.image">
-        </div>
-        <hr>
-        <div class="field">
-            <label>{{urun.price}}$</label>
-        </div>
-        <hr>
-        <div class="field">
-            <label>{{urun.description}}</label>
-        </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-        Add to Card
-        <p-button icon="pi pi-cart-plus" (click)="addToSepet(urun)"></p-button>
-    </ng-template>
-</p-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="card">-->
+<!--    <p-menubar [model]="items">-->
+
+<!--        <div class="align-items-center" style="float: right ">-->
+
+<!--            <button pButton class="mr-4" icon="pi pi-fw pi-shopping-cart" (click)="redirectCard()">-->
+<!--                <label class="ml-3">{{cardItem}}</label></button>-->
+<!--        </div>-->
+<!--    </p-menubar>-->
+<!--    <p-table [value]="products" [rows]="10" [paginator]="true" [tableStyle]="{'min-width': '75rem'}"-->
+<!--             [rowHover]="true" dataKey="id"-->
+<!--             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"-->
+<!--             [showCurrentPageReport]="true">-->
+<!--        <ng-template pTemplate="caption">-->
+<!--            <div class="flex align-items-center justify-content-between">-->
+<!--                Products-->
+<!--            </div>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="caption">-->
+<!--            <div class="flex align-items-center justify-content-between">-->
+<!--                <h5 class="m-0">Products</h5>-->
+<!--            </div>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="header">-->
+<!--            <tr>-->
+<!--                <th pSortableColumn="name" style="min-width:15rem">Name-->
+<!--                    <p-sortIcon field="name"></p-sortIcon>-->
+<!--                </th>-->
+<!--                <th pSortableColumn="image" style="min-width:15rem">Image-->
+<!--                    <p-sortIcon field="image"></p-sortIcon>-->
+<!--                </th>-->
+<!--                <th pSortableColumn="price">Price-->
+<!--                    <p-sortIcon field="price">Price</p-sortIcon>-->
+<!--                </th>-->
+<!--                <th></th>-->
+<!--            </tr>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="body" let-product>-->
+<!--            <tr>-->
+<!--                <td>{{product.name}}</td>-->
+<!--                <td><img [src]="product.image" [alt]="product.name" width="100" class="shadow-4"/></td>-->
+<!--                <td>{{product.price | currency:'USD'}}</td>-->
+<!--                <td>-->
+<!--                    <p-button icon="pi pi-chevron-right" (click)="showDetail(product)" label="Details"></p-button>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="summary">-->
+<!--            <div class="flex align-items-center justify-content-between">-->
+<!--                In total there are {{products ? products.length : 0 }} products.-->
+<!--            </div>-->
+<!--        </ng-template>-->
+<!--    </p-table>-->
+<!--</div>-->
+
+<!--<p-dialog [(visible)]="productDialog" [style]="{width: '1000px'}" header="Product Details" [modal]="true"-->
+<!--          styleClass="p-fluid">-->
+<!--    <ng-template pTemplate="content">-->
+<!--        <div class="field">-->
+<!--            <img [src]="urun.image" [alt]="urun.image" class="product-image" *ngIf="urun.image">-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="field">-->
+<!--            <label>{{urun.price}}$</label>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="field">-->
+<!--            <label>{{urun.description}}</label>-->
+<!--        </div>-->
+<!--    </ng-template>-->
+<!--    <ng-template pTemplate="header">-->
+<!--        Add to Card-->
+<!--        <p-button icon="pi pi-cart-plus" (click)="addToSepet(urun)"></p-button>-->
+<!--    </ng-template>-->
+<!--</p-dialog>-->
 
 

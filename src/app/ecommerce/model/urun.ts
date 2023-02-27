@@ -4,7 +4,6 @@ export interface Urun {
     description?:string;
     price?:number;
     image?:string;
-    amount?:number;
     stok?:number;
 
 }

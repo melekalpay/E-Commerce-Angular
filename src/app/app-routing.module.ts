@@ -17,6 +17,7 @@ import {UserGuard} from "./auth/user.guard";
                     { path: 'admin',canActivate:[AdminGuard], loadChildren: () => import('./ecommerce/admin/admin.module').then(m => m.AdminModule) },
                     { path: 'user', canActivate:[UserGuard], loadChildren: () => import('./ecommerce/user/user.module').then(m => m.UserModule) },
                     { path: 'card',canActivate:[UserGuard], loadChildren: () => import('./ecommerce/shoppingcard/card.module').then(m => m.CardModule) },
+                    { path: 'product/:id',canActivate:[UserGuard], loadChildren: () => import('./ecommerce/productdetails/productdetail.module').then(m => m.ProductDetailModule) }
                     // { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     // { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     // { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },

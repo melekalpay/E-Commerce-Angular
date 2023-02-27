@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../auth/auth.service";
@@ -6,19 +6,21 @@ import {ProductService} from "../../demo/service/product.service";
 import {Basket} from "../model/basket";
 import {Urun} from "../model/urun";
 import {HttpErrorResponse} from "@angular/common/http";
+import {ProductDetailComponent} from "../productdetails/productdetail.component";
 
 @Component({
     selector: 'app-card',
     templateUrl: './card.component.html',
     styleUrls: ['card.component.css']
 })
-export class CardComponent {
+export class CardComponent implements OnInit{
 
     basketItems! : Basket[];
     selectedProducts!: Basket[];
 
-    constructor(private auth: AuthService,private productService:ProductService) {
+    amount : number = 1;
 
+    constructor(private auth: AuthService,private productService:ProductService) {
     }
 
     ngOnInit(): void {
@@ -27,20 +29,23 @@ export class CardComponent {
             this.loadCart();
 
         })
+
     }
 
     incQnt({prodId, qnt}: { prodId: any, qnt: any }) {
+        this.basketItems.forEach(v=>{
+        })
         for (let i = 0; i < this.basketItems.length; i++) {
             // @ts-ignore
             if (this.basketItems[i].product.id === prodId) {
                 // @ts-ignore
-                if (qnt != this.basketItems[i].product.stok )
-                    { // @ts-ignore
-                        this.basketItems[i].product.amount = parseInt(qnt) + 1;
+                if (qnt != this.basketItems[i].product.stok ) {
+                        // @ts-ignore
+                        this.basketItems[i].quantity += this.amount;
+                    this.loadCart();
                     }
             }
         }
-        this.loadCart();
         console.log(this.selectedProducts )
     }
 
@@ -48,37 +53,28 @@ export class CardComponent {
         for (let i = 0; i < this.basketItems.length; i++) {
             // @ts-ignore
             if (this.basketItems[i].product.id === prodId) {
-                if (qnt != 1)
-                    {
-                        this.decreaseLoadCart();
-                        // @ts-ignore
-                        this.basketItems[i].product.amount = parseInt(qnt) - 1;
+                if (qnt != 1) {
+                    if (this.basketItems[i].quantity! >= 1) {
+                        this.total -= this.basketItems[i].product?.price!;
+                        console.log(this.total)
+                    } else {
+                        this.total = this.basketItems[i].product?.price!;
                     }
+                    // @ts-ignore
+                    this.basketItems[i].quantity -= this.amount;
+                }
+            }
             }
         }
-    }
+
 
     total: number = 0;
-
     loadCart() {
+        this.total=0;
         if (this.basketItems) {
             this.basketItems.forEach(v => {
-               this.total =( v.product?.amount! * v.product?.price!);
+               this.total +=( v.quantity! * v.product?.price!);
                 console.log(this.total)
-            })
-        }
-    }
-
-    decreaseLoadCart() {
-        if (this.basketItems) {
-            this.basketItems.forEach(v => {
-                if(v.product?.amount! >= 1){
-                    this.total -= v.product?.price!;
-                    console.log(this.total)
-                }
-                else {
-                    this.total = v.product?.price!;
-                }
             })
         }
     }

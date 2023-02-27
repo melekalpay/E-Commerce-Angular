@@ -23,14 +23,14 @@
                     </td>
                     <td>
                             <p-button icon="pi pi-plus"
-                                      (click)="incQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.product?.amount!})"></p-button>
-                            {{getCartDetail.product?.amount}}
+                                      (click)="incQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>
+                            {{getCartDetail.quantity}}
                             <p-button icon="pi pi-minus"
-                                      (click)="decQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.product?.amount!})"></p-button>
+                                      (click)="decQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>
 
                     </td>
                     <td>
-                            {{getCartDetail.product?.amount! * getCartDetail.product?.price!|number}} $
+                            {{getCartDetail.quantity! * getCartDetail.product?.price!|number}} $
                     </td>
                     <td>
                         <p-button icon="pi pi-trash" (click)="singleDelete(getCartDetail?.id! )"></p-button>

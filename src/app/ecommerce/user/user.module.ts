@@ -15,13 +15,19 @@ import {RippleModule} from "primeng/ripple";
 import {MenubarModule} from "primeng/menubar";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {DataViewModule} from "primeng/dataview";
+import {DropdownModule} from "primeng/dropdown";
+import {ImageModule} from "primeng/image";
 
 
 
 @NgModule({
-  declarations: [
-    UserComponent
-  ],
+    declarations: [
+        UserComponent
+    ],
+    exports: [
+        UserComponent
+    ],
     imports: [
         CommonModule,
         UserRoutingModule,
@@ -38,7 +44,10 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
         RippleModule,
         MenubarModule,
         DialogModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        DataViewModule,
+        DropdownModule,
+        ImageModule
     ]
 })
 export class UserModule { }
