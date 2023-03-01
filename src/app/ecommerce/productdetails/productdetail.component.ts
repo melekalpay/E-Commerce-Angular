@@ -7,12 +7,17 @@ import {Basket} from "../model/basket";
 import {Urun} from "../model/urun";
 import {HttpErrorResponse} from "@angular/common/http";
 import {UserComponent} from "../user/user.component";
+import {CartService} from "../../demo/service/cart.service";
+import {count} from "rxjs";
 
 @Component({
     selector: 'app-productdetail',
-    templateUrl: './productdetail.component.html'
+    templateUrl: './productdetail.component.html',
+    providers: [CartService]
 })
 export class ProductDetailComponent implements OnInit {
+
+
 
     urun!: Urun;
     items: any = [];
@@ -21,6 +26,8 @@ export class ProductDetailComponent implements OnInit {
     display: boolean = false;
 
     amount : number =1;
+
+
 
     showDialog() {
         this.display = true;
@@ -38,10 +45,9 @@ export class ProductDetailComponent implements OnInit {
     }
 
 
-    constructor(private productService: ProductService, private route: ActivatedRoute, private router: Router) {
+    constructor(private productService: ProductService, private route: ActivatedRoute, private router: Router,private cartService:CartService) {
         this.productService.getBasketData().subscribe((resp: Basket[]) => {
             this.basketItems = resp
-            this.cardItem = this.basketItems.length;
         })
     }
 
@@ -51,50 +57,34 @@ export class ProductDetailComponent implements OnInit {
     }
 
     addToSepet(category: Urun) {
-
-        if (this.basketItems.length==0){
-            this.productService.saveBasket(category).subscribe((data: any) => {
-                console.log(data)
-        })}
-        for(let i=0;i<this.basketItems.length;i++){
+        if (this.basketItems.length ==0){
+            this.productService.saveBasket(category,this.amount).subscribe((data: any) => {
+                console.log(data)}
+            )
+        }
+        for(let i =0;i<this.basketItems.length;i++){
             // @ts-ignore
-            if(this.basketItems[i].product.id === category.id){
+            if(category.id == this.basketItems[i].product.id){
                 // @ts-ignore
-                this.basketItems[i].quantity +=1;
+                this.basketItems[i].quantity+=this.amount;
+
+                // @ts-ignore
+                this.productService.setQuantity(this.basketItems[i].id,this.basketItems[i].quantity).subscribe(
+                    (response : void) => {
+                        console.log(response)
+                    },
+                    (error:HttpErrorResponse) => {
+                        alert(error.message)
+                    }
+                );
             }
-            else{
-                this.productService.saveBasket(category).subscribe((data: any) => {
-                    console.log(data)
-                })
-            }}}
-
-
-
-        // if (this.basketItems.length===0){
-        //     this.productService.saveBasket(category).subscribe((data: any) => {
-        //         console.log(data)
-        //         return;
-        //     })}
-        // for (let i = 0; i < this.basketItems.length; i++) {
-        //     // @ts-ignore
-        //     if (this.basketItems[i].product.id === category.id) {
-        //
-        //         console.log("eşitler")
-        //         // @ts-ignore
-        //         if (this.amount != category.stok )
-        //         {
-        //             // @ts-ignore
-        //             this.amount +=1;
-        //             console.log("amount",this.amount)
-        //             // @ts-ignore
-        //             return;
-        //         }
-        // }
-        //         this.productService.saveBasket(category).subscribe((data: any) => {
-        //             console.log(data)
-        //         })
-        // }
-
+            else {
+                this.productService.saveBasket(category,this.amount).subscribe((data: any) => {
+                    console.log(data)}
+                )
+            }
+        }
+        console.log(this.amount)}
 
 
     redirectCard() {

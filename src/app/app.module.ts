@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
-import {CurrencyPipe, HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {
+    CommonModule,
+    CurrencyPipe,
+    HashLocationStrategy,
+    LocationStrategy,
+    PathLocationStrategy
+} from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -32,6 +38,8 @@ import {UserModule} from "./ecommerce/user/user.module";
 import {CardModule} from "./ecommerce/shoppingcard/card.module";
 import {HttpClientModule} from "@angular/common/http";
 import {ProductDetailModule} from "./ecommerce/productdetails/productdetail.module";
+import {BrowserModule} from "@angular/platform-browser";
+
 
 @NgModule({
     declarations: [

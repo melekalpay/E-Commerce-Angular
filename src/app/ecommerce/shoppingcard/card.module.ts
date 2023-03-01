@@ -11,6 +11,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CheckboxModule} from "primeng/checkbox";
 import {TableModule} from "primeng/table";
+import {StockComponent} from "../stock/stock.component";
 
 
 
@@ -30,7 +31,8 @@ import {TableModule} from "primeng/table";
         ReactiveFormsModule,
         FormsModule,
         CheckboxModule,
-        TableModule
+        TableModule,
+        StockComponent
     ]
 })
 export class CardModule { }

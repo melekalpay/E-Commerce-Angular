@@ -24,7 +24,8 @@
                     </div>
                     <div class="product-grid-item-bottom">
                         <span class="product-price">${{product.price}}</span>
-<!--                        <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>-->
+                        <p *ngIf="product.stok > 0 ">INSTOCK</p>
+                        <p *ngIf="product.stok < 1 ">OUTOFSTOCK</p>
                     </div>
                 </div>
             </div>

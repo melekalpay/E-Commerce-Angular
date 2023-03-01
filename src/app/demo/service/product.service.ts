@@ -7,6 +7,7 @@ import {log10} from "chart.js/helpers";
 import {Observable, tap, throwError} from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import {Basket} from "../../ecommerce/model/basket";
+import {User} from "../../ecommerce/model/user";
 
 @Injectable()
 export class ProductService {
@@ -63,6 +64,9 @@ export class ProductService {
     saveData(urun : Urun) : Observable<Object>{
         return this.http.post<Urun>(`${this.apiUrl}product/save`, urun);
     }
+    updateData(urun : Urun) : Observable<Object>{
+        return this.http.put<Urun>(`${this.apiUrl}product/update`, urun);
+    }
 
     deleteData(id : number) : Observable<void>{
         return  this.http.delete<void>(`${this.apiUrl}product/delete/${id}`);
@@ -74,9 +78,8 @@ export class ProductService {
     getBasketData(): Observable<Basket[]>{
         return this.http.get<Basket[]>(`${this.apiUrl}basket/all`)
     }
-    saveBasket(basket : Basket) : Observable<Object>{
-
-        return this.http.post<Basket>(`${this.apiUrl}basket/save`, basket);
+    saveBasket(basket : Basket,quantity:number) : Observable<Object>{
+        return this.http.post<Basket>(`${this.apiUrl}basket/save/${quantity}/`, basket);
     }
 
     deleteBasket(id : number) : Observable<void>{
@@ -87,8 +90,12 @@ export class ProductService {
         return  this.http.post<Basket[]>(`${this.apiUrl}basket/delete/all`,basket);
     }
 
-    setQuantity(basket : Basket , amount : number) :Observable<void>{
-        return  this.http.post<void>(`${this.apiUrl}setQuantity/${amount}`,basket);
+    setQuantity(id: number , amount : number) :Observable<void>{
+        return  this.http.post<void>(`${this.apiUrl}basket/setQuantity/${amount}`,id);
+    }
+
+    getByIdBasket(id:number):Observable<Object>{
+        return  this.http.get<Basket>(`${this.apiUrl}basket/findById/${id}`);
     }
 
 

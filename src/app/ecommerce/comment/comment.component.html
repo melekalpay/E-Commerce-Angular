@@ -1,0 +1,8 @@
+<div *ngFor="let comment of list1">
+    <ul>
+        <li>
+            {{comment.title}}
+            <app-comment [list2]="comment.children" *ngIf="comment.children"></app-comment>
+        </li>
+    </ul>
+</div>

@@ -14,6 +14,9 @@ import {ProductDetailRoutingModule} from "./productdetail-routing.module";
 import {UserModule} from "../user/user.module";
 import {MenubarModule} from "primeng/menubar";
 import {DialogModule} from "primeng/dialog";
+import {CommentComponent} from "../comment/comment.component";
+import {HeaderComponent} from "../header/header.component";
+
 
 
 
@@ -36,7 +39,9 @@ import {DialogModule} from "primeng/dialog";
         TableModule,
         UserModule,
         MenubarModule,
-        DialogModule
+        DialogModule,
+        CommentComponent,
+        HeaderComponent
     ]
 })
 export class ProductDetailModule { }

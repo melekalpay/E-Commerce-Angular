@@ -24,7 +24,8 @@
                     <td>
                             <p-button icon="pi pi-plus"
                                       (click)="incQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>
-                            {{getCartDetail.quantity}}
+                        <p>{{getCartDetail.quantity}}</p>
+
                             <p-button icon="pi pi-minus"
                                       (click)="decQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>
 
@@ -34,6 +35,9 @@
                     </td>
                     <td>
                         <p-button icon="pi pi-trash" (click)="singleDelete(getCartDetail?.id! )"></p-button>
+                    </td>
+                    <td>
+                        <p-button  (click)="buy(getCartDetail?.id!)" label="Buy"></p-button>
                     </td>
                 </tr>
             </table>

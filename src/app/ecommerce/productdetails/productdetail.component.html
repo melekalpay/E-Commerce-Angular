@@ -11,6 +11,7 @@
         <img [src]="urun?.image!" [alt]="urun?.image!" class="product-image"  width="25%" *ngIf="urun?.image!">
     </div>
     <hr>
+    <div>
     <div class="field">
         <label>{{urun?.price!}}$</label>
     </div>
@@ -18,13 +19,15 @@
     <div class="field">
         <label>{{urun?.description!}}</label>
     </div>
-</div>
-<div class="card" >
-    <p-button icon="pi pi-plus" (click)="incQnt(urun)"></p-button>
-        {{amount}}
-    <p-button icon="pi pi-minus" (click)="decQnt(urun)"></p-button>
-    Add to Card
-    <p-button icon="pi pi-cart-plus" (click)="addToSepet(urun)"></p-button>
+    </div>
+    <div >
+        <p-button icon="pi pi-plus" (click)="incQnt(urun)"></p-button>
+        <label>{{amount}}</label>
+        <p-button icon="pi pi-minus" (click)="decQnt(urun)"></p-button>
+        <p-divider align="right">
+            <p-button label="Add to Cart" icon="pi pi-cart-plus" (click)="addToSepet(urun)" styleClass="p-button-outlined" ></p-button>
+        </p-divider>
+    </div>
 </div>
 <div class="card">
 <p-dialog header="Add Comment" [(visible)]="display">
@@ -33,4 +36,6 @@
 
 <p-button type="button" (click)="showDialog()"  label="Add Comment"></p-button>
 </div>
+
+
 

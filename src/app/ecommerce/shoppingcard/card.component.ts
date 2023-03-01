@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../auth/auth.service";
@@ -7,6 +7,8 @@ import {Basket} from "../model/basket";
 import {Urun} from "../model/urun";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ProductDetailComponent} from "../productdetails/productdetail.component";
+import {UserComponent} from "../user/user.component";
+import {StockComponent} from "../stock/stock.component";
 
 @Component({
     selector: 'app-card',
@@ -20,8 +22,13 @@ export class CardComponent implements OnInit{
 
     amount : number = 1;
 
+    changeStock!: boolean;
+    outofStock: string="OutOfStock";
+
     constructor(private auth: AuthService,private productService:ProductService) {
     }
+
+
 
     ngOnInit(): void {
         this.productService.getBasketData().subscribe((resp : Basket[]) => {this.basketItems = resp
@@ -39,9 +46,18 @@ export class CardComponent implements OnInit{
             // @ts-ignore
             if (this.basketItems[i].product.id === prodId) {
                 // @ts-ignore
-                if (qnt != this.basketItems[i].product.stok ) {
+                if (qnt < this.basketItems[i].product.stok ) {
                         // @ts-ignore
                         this.basketItems[i].quantity += this.amount;
+                    // @ts-ignore
+                    this.productService.setQuantity(this.basketItems[i].id,this.basketItems[i].quantity).subscribe(
+                        (response : void) => {
+                            console.log(response)
+                        },
+                        (error:HttpErrorResponse) => {
+                            alert(error.message)
+                        }
+                    );
                     this.loadCart();
                     }
             }
@@ -62,6 +78,15 @@ export class CardComponent implements OnInit{
                     }
                     // @ts-ignore
                     this.basketItems[i].quantity -= this.amount;
+                    // @ts-ignore
+                    this.productService.setQuantity(this.basketItems[i].id,this.basketItems[i].quantity).subscribe(
+                        (response : void) => {
+                            console.log(response)
+                        },
+                        (error:HttpErrorResponse) => {
+                            alert(error.message)
+                        }
+                    );
                 }
             }
             }
@@ -104,6 +129,32 @@ export class CardComponent implements OnInit{
            (error:HttpErrorResponse) => {
                alert(error.message)}
        )
+    }
+
+    buy(number: number) {
+        this.productService.getByIdBasket(number).subscribe(value => {
+            console.log(value)
+
+            // @ts-ignore
+            if(value.quantity >= value.product.stok){
+                // @ts-ignore
+                value.product.stok = 0;
+                // @ts-ignore
+                this.productService.updateData(value.product).subscribe(value=>{
+                    console.log(value)
+                })
+
+            }
+            else {
+                // @ts-ignore
+                value.product.stok = value.product.stok - value.quantity;
+                // @ts-ignore
+                this.productService.updateData(value.product).subscribe(value=>{
+                    console.log(value)
+                })
+            }
+
+        })
     }
 
 }

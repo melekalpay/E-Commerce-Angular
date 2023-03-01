@@ -18,6 +18,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DataViewModule} from "primeng/dataview";
 import {DropdownModule} from "primeng/dropdown";
 import {ImageModule} from "primeng/image";
+import {StockComponent} from "../stock/stock.component";
 
 
 
@@ -47,7 +48,8 @@ import {ImageModule} from "primeng/image";
         ConfirmDialogModule,
         DataViewModule,
         DropdownModule,
-        ImageModule
+        ImageModule,
+        StockComponent
     ]
 })
 export class UserModule { }
