@@ -1,0 +1,18 @@
+<div class="card ">
+    <div style="text-align:center">
+        <h6>Register</h6>
+    </div>
+    <div class="p-fluid">
+        <div class="field">
+            <div class="field">
+                <label for="username">Username</label>
+                <input pInputText id="username" type="text" [(ngModel)]="username" />
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input pInputText id="password" type="password" [(ngModel)]="password"/>
+            </div>
+            <p-button label="Register" (onClick)="register()"></p-button>
+        </div>
+    </div>
+</div>

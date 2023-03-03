@@ -39,6 +39,7 @@ import {CardModule} from "./ecommerce/shoppingcard/card.module";
 import {HttpClientModule} from "@angular/common/http";
 import {ProductDetailModule} from "./ecommerce/productdetails/productdetail.module";
 import {BrowserModule} from "@angular/platform-browser";
+import {RegisterModule} from "./ecommerce/register/register.module";
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import {BrowserModule} from "@angular/platform-browser";
         InputTextareaModule,
         CardModule,
         HttpClientModule,
-        ProductDetailModule
+        ProductDetailModule,
+        RegisterModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },

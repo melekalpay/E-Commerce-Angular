@@ -23,18 +23,15 @@ import {CartService} from "../../demo/service/cart.service";
 export class HeaderComponent implements OnInit{
 
     items: any = [];
-    cardItem?: number = 0;
+    cardItem?: number ;
 
     constructor(private cartService:CartService) {
-
-
     }
 
     ngOnInit(): void {
         this.cartService.getCartObservable().subscribe(cartSummary => {
             this.cardItem=cartSummary.count;
         })
-
     }
 
 }

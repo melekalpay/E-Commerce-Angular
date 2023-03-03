@@ -3,6 +3,7 @@ import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ProductService} from "../../demo/service/product.service";
 import {User} from "../model/user";
+import {Urun} from "../model/urun";
 
 @Component({
     selector: 'app-login',
@@ -14,6 +15,8 @@ export class LoginComponent implements OnInit{
     username: any;
     password: any;
 
+    users!: User[];
+
 
     constructor(private router: Router,private productService:ProductService) {
         // @ts-ignore
@@ -22,19 +25,19 @@ export class LoginComponent implements OnInit{
 
     redirectAdmin(): void {
 
-        if (this.username == "admin" && this.password == "admin") {
-            localStorage.setItem('userType',this.username)
-            this.router.navigate(['admin'])
-        } else if (this.username == "user" && this.password == "user") {
-            localStorage.setItem('userType',this.username)
-            this.router.navigate(['user'])
-        } else {
-            alert("Wrong Password or Username")
-        }
+        this.users.forEach(v => {
+            if(this.username == v.username && this.password == v.password){
+                console.log(v?.rol?.roleName!)
+                localStorage.setItem('userType',this.username)
+                this.router.navigate([`${v?.rol?.roleName!}`])
+            }
+
+        })
+
     }
 
     ngOnInit(): void {
-
+        this.productService.getAllUsers().subscribe((resp : User[]) => this.users = resp)
     }
 
 

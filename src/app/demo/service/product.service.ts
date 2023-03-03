@@ -8,6 +8,7 @@ import {Observable, tap, throwError} from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import {Basket} from "../../ecommerce/model/basket";
 import {User} from "../../ecommerce/model/user";
+import {Comment} from "../../ecommerce/model/comment";
 
 @Injectable()
 export class ProductService {
@@ -96,6 +97,22 @@ export class ProductService {
 
     getByIdBasket(id:number):Observable<Object>{
         return  this.http.get<Basket>(`${this.apiUrl}basket/findById/${id}`);
+    }
+
+    getAllComments():Observable<Comment[]>{
+        return  this.http.get<Comment[]>(`${this.apiUrl}comment/all`);
+    }
+
+    saveUser(username: string , password : string) :Observable<Object>{
+        return  this.http.post<User>(`${this.apiUrl}user/save/${username}`,password);
+    }
+
+    getAllUsers():Observable<User[]>{
+        return this.http.get<User[]>(`${this.apiUrl}user/all`);
+    }
+
+    getBasketByUserName(username:string):Observable<Object>{
+        return  this.http.get<Basket>(`${this.apiUrl}basket/findByUserName/${username}`);
     }
 
 

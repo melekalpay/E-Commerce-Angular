@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
+import {ProductService} from "../../demo/service/product.service";
+import {Comment} from "../model/comment";
+import {ButtonModule} from "primeng/button";
 
 
 @Component({
@@ -7,38 +10,30 @@ import {NgForOf, NgIf} from "@angular/common";
     templateUrl: './comment.component.html',
     imports: [
         NgForOf,
-        NgIf
+        NgIf,
+        ButtonModule
     ],
     standalone: true
 })
 export class CommentComponent implements OnInit{
     @Input() list2! : any[];
 
-    list : any[] =  [
-        { id: 1, title: "Teknoloji", parent_id: 0 },
-        { id: 2, title: "Giyim", parent_id: 0 },
-        { id: 3, title: "Pet", parent_id: 0 },
-        { id: 4, title: "Bilgisayar", parent_id: 1 },
-        { id: 5, title: "Telefon", parent_id: 1 },
-        { id: 6, title: "Erkek", parent_id: 2 },
-        { id: 7, title: "Kadın", parent_id: 2 },
-        { id: 8, title: "Kedi", parent_id: 3 },
-        { id: 9, title: "Köpek", parent_id: 3 },
-        { id: 10, title: "Ayakkabı", parent_id: 6 }
+    comments!: Comment[];
 
-    ];
 
     list1!: any[];
 
     recursivefunc2(list : any, id : 0) {
         let array : any[]= [];
-        this.list.forEach(element => {
-            if (element.parent_id === id) {
-                let children = this.recursivefunc2(this.list, element.id);
-
+        this.comments.forEach(element => {
+            if (element.parent === id) {
+                // @ts-ignore
+                let children = this.recursivefunc2(this.comments, element.id);
                 if (children.length) {
+                    // @ts-ignore
                     element.children = children;
                 } else {
+                    // @ts-ignore
                     element.children = [];
                 }
                 array.push(element);
@@ -48,12 +43,19 @@ export class CommentComponent implements OnInit{
     }
 
 
-    constructor() {
+    constructor(private commentService:ProductService) {
 
     }
 
     ngOnInit(): void {
-        this.list1 = this.recursivefunc2(this.list,0);
+        this.commentService.getAllComments().subscribe(value => {
+            this.comments = value;
+            console.log(this.comments)
+        })
+
+        this.list1=this.recursivefunc2(this.comments,0);
+
+        console.log(this.list1)
     }
 
 }

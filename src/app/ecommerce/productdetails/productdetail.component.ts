@@ -9,6 +9,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {UserComponent} from "../user/user.component";
 import {CartService} from "../../demo/service/cart.service";
 import {count} from "rxjs";
+import {Cartsummary} from "../model/cartsummary";
 
 @Component({
     selector: 'app-productdetail',
@@ -27,6 +28,7 @@ export class ProductDetailComponent implements OnInit {
 
     amount : number =1;
 
+    cart! : Cartsummary;
 
 
     showDialog() {
@@ -41,6 +43,11 @@ export class ProductDetailComponent implements OnInit {
             this.basketItems = resp
             console.log(this.basketItems)
 
+        })
+
+        this.cartService.getCartObservable().subscribe(v=>{
+            // @ts-ignore
+            this.cardItem = v.count;
         })
     }
 
@@ -57,6 +64,10 @@ export class ProductDetailComponent implements OnInit {
     }
 
     addToSepet(category: Urun) {
+        let count ={
+            count : this.cardItem + 1
+        }
+        this.cartService.setCart(count);
         if (this.basketItems.length ==0){
             this.productService.saveBasket(category,this.amount).subscribe((data: any) => {
                 console.log(data)}

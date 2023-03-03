@@ -6,7 +6,7 @@ import {Cartsummary} from "../../ecommerce/model/cartsummary";
 @Injectable()
 export class CartService {
     private cartSubject =new BehaviorSubject<Cartsummary>({
-        count : 7
+        count : 0
     });
 
     private cartObservable = this.cartSubject.asObservable();

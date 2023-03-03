@@ -1,8 +1,13 @@
-<div *ngFor="let comment of list1">
+<div class="p-fluid grid card " *ngFor="let comment of list1">
     <ul>
         <li>
-            {{comment.title}}
-            <app-comment [list2]="comment.children" *ngIf="comment.children"></app-comment>
+            <div class="row">
+                <label>{{comment?.user?.username!}}</label>
+                {{comment?.comment!}}
+                <p-button>Reply</p-button>
+                <p-button>Like</p-button>
+                <app-comment [list2]="comment?.children" *ngIf="comment.children"></app-comment>
+            </div>
         </li>
     </ul>
 </div>

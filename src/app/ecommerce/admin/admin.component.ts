@@ -47,9 +47,9 @@ export class AdminComponent implements OnInit{
 
     public saveProducts(): void {
         this.submitted = true;
-        this.productService.saveData(this.product).subscribe((data:  any) => {
-            console.log(data)
-        });
+            this.productService.saveData(this.product).subscribe((data:  any) => {
+                console.log(data)
+            });
         this.productDialog = false;
     }
 
