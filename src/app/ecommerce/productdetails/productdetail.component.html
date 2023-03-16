@@ -6,32 +6,60 @@
             <label class="ml-3">{{cardItem}}</label></button>
     </div>
 </p-menubar>
-<div class="card">
-    <div class="field">
-        <img [src]="urun?.image!" [alt]="urun?.image!" class="product-image"  width="25%" *ngIf="urun?.image!">
+<div class="row product-details">
+    <div class="col-sm-6">
+        <img [src]="urun?.image!" [alt]="urun?.image!" class="product-img" *ngIf="urun?.image!">
     </div>
-    <hr>
+    <div class="col-sm-6">
+        <div class="details">
+            <h1>Product Name : {{urun?.name!}}</h1>
+            <hr>
+            <h2>Price : {{urun?.price!}}$</h2>
+            <hr>
+            <h4>Product Detail : {{urun?.description!}}</h4>
+            <br><br><br><br><br>
+        </div>
+        <div class="quantity-group">
+            <p-button icon="pi pi-plus" (click)="incQnt(urun)"></p-button>
+            <label>{{amount}}</label>
+            <p-button icon="pi pi-minus" (click)="decQnt(urun)"></p-button>
+        </div>
+    </div>
     <div>
-    <div class="field">
-        <label>{{urun?.price!}}$</label>
-    </div>
-    <hr>
-    <div class="field">
-        <label>{{urun?.description!}}</label>
-    </div>
-    </div>
-    <div >
-        <p-button icon="pi pi-plus" (click)="incQnt(urun)"></p-button>
-        <label>{{amount}}</label>
-        <p-button icon="pi pi-minus" (click)="decQnt(urun)"></p-button>
         <p-divider align="right">
-            <p-button label="Add to Cart" icon="pi pi-cart-plus" (click)="addToSepet(urun)" styleClass="p-button-outlined" ></p-button>
+            <p-button label="Add to Cart" icon="pi pi-cart-plus" (click)="addToSepet(urun)"
+                      styleClass="p-button-outlined"></p-button>
         </p-divider>
     </div>
 </div>
-<!--<h1 class="ml-5">Comments</h1>-->
 
-<!--<app-comment [comments]="commentss" *ngIf="comments"></app-comment>-->
+
+<div class="row align-items-center justify-content-center">
+    <div class="comment-title ml-5" style="text-align:center;">
+        <h1>Comments</h1>
+    </div>
+    <div class="add-comment col-8 ">
+        <div class="comment-input">
+            <div class="">
+                <div class="p-inputgroup">
+                    <input type="text" pInputText placeholder="Add a comment..." [(ngModel)]="text"/>
+                    <button type="button" pButton pRipple icon="pi pi-check" styleClass="p-button-warn"
+                            (click)="saveComment()"></button>
+                </div>
+            </div>
+            <!--            <input-->
+            <!--                class="form-control form-control-sm"-->
+            <!--                type="text"-->
+            <!--                placeholder="Add a comment.."-->
+            <!--                [(ngModel)]="text"-->
+            <!--            />-->
+            <!--            <div class="flex align-items-center justify-content-center w-4rem h-4rem m-2" style="float:right;">-->
+            <!--                <p-button  label="Send" (onClick)="saveComment()"></p-button>-->
+            <!--            </div>-->
+        </div>
+    </div>
+
+    <app-comment [list2]="list1" (recursiveTetikleme)="recursive($event)"  *ngIf="list1.length>0"></app-comment>
 
 
 

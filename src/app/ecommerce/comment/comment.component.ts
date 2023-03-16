@@ -1,8 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {ProductService} from "../../demo/service/product.service";
 import {Comment} from "../model/comment";
 import {ButtonModule} from "primeng/button";
+import {DividerModule} from "primeng/divider";
+import {DialogModule} from "primeng/dialog";
+import {ChipsModule} from "primeng/chips";
+import {FormsModule} from "@angular/forms";
+import {User} from "../model/user";
+import {CardModule} from "primeng/card";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -11,51 +18,66 @@ import {ButtonModule} from "primeng/button";
     imports: [
         NgForOf,
         NgIf,
-        ButtonModule
+        ButtonModule,
+        DividerModule,
+        DialogModule,
+        ChipsModule,
+        FormsModule,
+        JsonPipe,
+        CardModule
     ],
     standalone: true
 })
 export class CommentComponent implements OnInit{
     @Input() list2! : any[];
+    @Output()  recursiveTetikleme = new EventEmitter<number>();
 
-    comments!: Comment[];
 
+    display: boolean = false;
 
-    list1!: any[];
+    replay : Comment = {};
 
-    recursivefunc2(list : any, id : 0) {
-        let array : any[]= [];
-        this.comments.forEach(element => {
-            if (element.parent === id) {
-                // @ts-ignore
-                let children = this.recursivefunc2(this.comments, element.id);
-                if (children.length) {
-                    // @ts-ignore
-                    element.children = children;
-                } else {
-                    // @ts-ignore
-                    element.children = [];
-                }
-                array.push(element);
-            }
-        })
-        return array;
+    text! : string;
+
+    user!: User;
+    selcom!: Comment;
+
+    showDialog(comment : any) {
+        console.log(comment)
+        this.selcom = comment;
+        this.display = true;
     }
 
 
-    constructor(private commentService:ProductService) {
+    constructor(private productService:ProductService,private router:Router) {
 
     }
 
     ngOnInit(): void {
-        this.commentService.getAllComments().subscribe(value => {
-            this.comments = value;
-            console.log(this.comments)
-        })
+        // @ts-ignore
+        let userId = Number(JSON.parse(localStorage.getItem('userType')));
 
-        this.list1=this.recursivefunc2(this.comments,0);
+        this.productService.getUserById(userId).subscribe(v=>{
+            this.user = v;
+        });
 
-        console.log(this.list1)
     }
 
+    saveReplay() {
+
+        console.log(this.selcom)
+        this.replay.parent = this.selcom.id;
+        this.replay.user = this.user;
+        this.replay.comment= this.text;
+        this.replay.product=this.selcom.product;
+
+        this.productService.saveComment(this.replay).subscribe(
+            v=>{},
+            error => {},
+            (complete:void) =>{this.recursiveTetikleme.emit(this.selcom.product?.id)}
+        )
+
+        this.display=false;
+
+    }
 }

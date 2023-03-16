@@ -12,14 +12,14 @@ export class AuthService {
 
 
     adminAuth() {
-        if(localStorage.getItem('userType')=="admin"){
+        if(localStorage.getItem('userTypeName')=="admin"){
             return true;
         }
         return false;
 }
 
     userAuth() {
-        if(localStorage.getItem('userType')=="user"){
+        if(localStorage.getItem('userTypeName')=="user"){
             return true;
         }
         return false;

@@ -24,7 +24,7 @@
                     <td>
                             <p-button icon="pi pi-plus"
                                       (click)="incQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>
-                        <p>{{getCartDetail.quantity}}</p>
+                        <label style="padding:10px;">{{getCartDetail.quantity}}</label>
 
                             <p-button icon="pi pi-minus"
                                       (click)="decQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>

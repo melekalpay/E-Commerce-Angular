@@ -5,5 +5,6 @@ export interface Basket {
     id?:number;
     product?:Urun;
     quantity?:number;
-    user?:User;
+    user?:User
+
 }

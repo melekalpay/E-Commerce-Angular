@@ -21,6 +21,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {RatingModule} from "primeng/rating";
 import {RippleModule} from "primeng/ripple";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {MessageModule} from "primeng/message";
 
 
 
@@ -50,7 +51,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
         ConfirmDialogModule,
         RatingModule,
         RippleModule,
-        InputTextareaModule
+        InputTextareaModule,
+        MessageModule
     ]
 })
 export class RegisterModule { }

@@ -5,15 +5,18 @@ import {AuthService} from "../../auth/auth.service";
 import {ProductService} from "../../demo/service/product.service";
 import {Basket} from "../model/basket";
 import {Urun} from "../model/urun";
+import {Comment} from "../model/comment";
 import {HttpErrorResponse} from "@angular/common/http";
 import {UserComponent} from "../user/user.component";
 import {CartService} from "../../demo/service/cart.service";
 import {count} from "rxjs";
 import {Cartsummary} from "../model/cartsummary";
+import {User} from "../model/user";
 
 @Component({
     selector: 'app-productdetail',
     templateUrl: './productdetail.component.html',
+    styleUrls:['productdetail.component.css'],
     providers: [CartService]
 })
 export class ProductDetailComponent implements OnInit {
@@ -28,15 +31,20 @@ export class ProductDetailComponent implements OnInit {
 
     amount : number =1;
 
+    comment : Comment={};
+
     cart! : Cartsummary;
+    list: any[]=[];
+    list1:any[]=[];
 
+    user!: User;
 
-    showDialog() {
-        this.display = true;
-    }
+    text! : string;
+
 
     ngOnInit(): void {
-        this.route.params.subscribe(params => this.getByIdProduct(params['id']));
+        this.route.params.subscribe(params => {this.getByIdProduct(params['id']);
+            this.recursive(params['id']);});
         console.log(this.urun)
 
         this.productService.getBasketData().subscribe((resp: Basket[]) => {
@@ -49,6 +57,44 @@ export class ProductDetailComponent implements OnInit {
             // @ts-ignore
             this.cardItem = v.count;
         })
+
+
+
+        // @ts-ignore
+        let userId = Number(JSON.parse(localStorage.getItem('userType')));
+
+        this.productService.getUserById(userId).subscribe(v=>{
+            this.user = v;
+        });
+
+
+    }
+
+    recursive(id :number){
+        console.log("hahahsjsks",id)
+
+        this.productService.getAllCommentByProductId(id).subscribe(value => {
+            this.list = value;
+            this.list1=recursive(this.list);
+            console.log("laha",this.list1)
+
+        })
+        let recursive = (list : any, id = 0) => {
+            let array : any[]= [];
+            this.list.forEach((element: any)=> {
+                if (element.parent === id) {
+                    let children = recursive(this.list, element.id);
+                    if (children.length) {
+                        element.children = children;
+                    } else {
+                        element.children = [];
+                    }
+                    array.push(element);
+                }
+            })
+            return array;
+        }
+
     }
 
 
@@ -58,18 +104,23 @@ export class ProductDetailComponent implements OnInit {
         })
     }
 
+
     getByIdProduct(id: number) {
         this.productService.findByIdData(id).subscribe((data: Urun) => this.urun = data);
         console.log(this.urun)
+
+
     }
 
     addToSepet(category: Urun) {
         let count ={
             count : this.cardItem + 1
         }
+        // @ts-ignore
+        let userId = Number(JSON.parse(localStorage.getItem('userType')));
         this.cartService.setCart(count);
         if (this.basketItems.length ==0){
-            this.productService.saveBasket(category,this.amount).subscribe((data: any) => {
+            this.productService.saveBasket(category,this.amount,userId).subscribe((data: any) => {
                 console.log(data)}
             )
         }
@@ -90,9 +141,10 @@ export class ProductDetailComponent implements OnInit {
                 );
             }
             else {
-                this.productService.saveBasket(category,this.amount).subscribe((data: any) => {
+                this.productService.saveBasket(category,this.amount,userId).subscribe((data: any) => {
                     console.log(data)}
                 )
+
             }
         }
         console.log(this.amount)}
@@ -116,5 +168,17 @@ export class ProductDetailComponent implements OnInit {
             // @ts-ignore
             this.amount -= 1;
         }
+    }
+
+    saveComment() {
+        this.comment.comment = this.text;
+        this.comment.product = this.urun;
+        this.comment.parent = 0;
+        this.comment.user = this.user;
+        this.productService.saveComment(this.comment).subscribe(
+            v=>{},
+            error => {},
+            (complete:void) =>{this.recursive(this.urun?.id!)})
+
     }
 }

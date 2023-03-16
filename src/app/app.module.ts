@@ -40,6 +40,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {ProductDetailModule} from "./ecommerce/productdetails/productdetail.module";
 import {BrowserModule} from "@angular/platform-browser";
 import {RegisterModule} from "./ecommerce/register/register.module";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import {RegisterModule} from "./ecommerce/register/register.module";
         CardModule,
         HttpClientModule,
         ProductDetailModule,
-        RegisterModule
+        RegisterModule,
+        FontAwesomeModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },

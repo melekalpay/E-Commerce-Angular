@@ -79,8 +79,8 @@ export class ProductService {
     getBasketData(): Observable<Basket[]>{
         return this.http.get<Basket[]>(`${this.apiUrl}basket/all`)
     }
-    saveBasket(basket : Basket,quantity:number) : Observable<Object>{
-        return this.http.post<Basket>(`${this.apiUrl}basket/save/${quantity}/`, basket);
+    saveBasket(basket : Basket,quantity:number,id:number) : Observable<Object>{
+        return this.http.post<Basket>(`${this.apiUrl}basket/save/${quantity}/${id}`, basket);
     }
 
     deleteBasket(id : number) : Observable<void>{
@@ -111,8 +111,20 @@ export class ProductService {
         return this.http.get<User[]>(`${this.apiUrl}user/all`);
     }
 
-    getBasketByUserName(username:string):Observable<Object>{
-        return  this.http.get<Basket>(`${this.apiUrl}basket/findByUserName/${username}`);
+    getUserById(id:number):Observable<Object>{
+        return this.http.get<User>(`${this.apiUrl}user/findById/${id}`);
+    }
+
+    saveComment(comment : Comment) : Observable<Object>{
+        return this.http.post<Comment>(`${this.apiUrl}comment/save`, comment);
+    }
+
+    getAllCommentByProductId(id:number) : Observable<Comment[]>{
+        return this.http.get<Comment[]>(`${this.apiUrl}comment/findByProductId/${id}`);
+    }
+
+    getBasketByUserId(id:number):Observable<Basket[]>{
+        return  this.http.get<Basket[]>(`${this.apiUrl}basket/findByUserId/${id}`);
     }
 
 

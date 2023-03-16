@@ -9,6 +9,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MessageModule} from "primeng/message";
 
 
 
@@ -26,7 +27,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         MatInputModule,
         MatButtonModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        MessageModule
     ]
 })
 export class LoginModule { }

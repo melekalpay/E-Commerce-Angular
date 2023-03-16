@@ -1,10 +1,4 @@
-import {AfterContentChecked, Component, DoCheck, OnInit} from '@angular/core';
-import {ProductService} from "../../demo/service/product.service";
-import {ConfirmationService, MessageService} from "primeng/api";
-import {Urun} from "../model/urun";
-import {Router} from "@angular/router";
-import {Product} from "../../demo/api/product";
-import {HttpErrorResponse} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-stock',

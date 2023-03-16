@@ -1,13 +1,35 @@
-<div class="p-fluid grid card " *ngFor="let comment of list1">
-    <ul>
+<p-divider></p-divider>
+<div class="row flex-wrap align-items-center justify-content-center">
+<div class="col-8" *ngFor="let comment of list2 ; let i = index ">
+    <ul class="">
         <li>
-            <div class="row">
-                <label>{{comment?.user?.username!}}</label>
-                {{comment?.comment!}}
-                <p-button>Reply</p-button>
-                <p-button>Like</p-button>
-                <app-comment [list2]="comment?.children" *ngIf="comment.children"></app-comment>
+            <div class="  ">
+                <div class=" ">
+                        <p>  <i class="pi pi-user"></i> {{comment.user.username}}</p>
+                    <p-card [style]="{'width': '25rem', 'margin-bottom': '2em'}">
+                        <p>{{comment.comment}}</p>
+                    </p-card>
+
+                </div>
+                <div class="flex align-items-center justify-content-center w-4rem h-4rem m-2">
+                    <p-button class="p-button-rounded mr-3 ml-8"  (click)="showDialog(comment)" >Reply</p-button>
+                    <p-button>Like</p-button>
+                </div>
+
+                <app-comment [list2]="comment.children" *ngIf="comment.children"></app-comment>
             </div>
         </li>
     </ul>
 </div>
+</div>
+
+<p-dialog [(visible)]="display"  >
+    <div class="field">
+
+        <input type="text" pInputText [(ngModel)]="text" >
+    </div>
+    <div class="field">
+
+        <button type="button" pButton autofocus  label="Submit" (click)="saveReplay()" ></button>
+    </div>
+</p-dialog>

@@ -16,6 +16,8 @@ import {MenubarModule} from "primeng/menubar";
 import {DialogModule} from "primeng/dialog";
 import {CommentComponent} from "../comment/comment.component";
 import {HeaderComponent} from "../header/header.component";
+import {RippleModule} from "primeng/ripple";
+import {CardModule} from "primeng/card";
 
 
 
@@ -41,7 +43,9 @@ import {HeaderComponent} from "../header/header.component";
         MenubarModule,
         DialogModule,
         CommentComponent,
-        HeaderComponent
+        HeaderComponent,
+        RippleModule,
+        CardModule
     ]
 })
 export class ProductDetailModule { }

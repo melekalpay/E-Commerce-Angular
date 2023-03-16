@@ -29,13 +29,18 @@ export class CardComponent implements OnInit{
     }
 
 
-
     ngOnInit(): void {
-        this.productService.getBasketData().subscribe((resp : Basket[]) => {this.basketItems = resp
+        // @ts-ignore
+        let userId = Number(JSON.parse(localStorage.getItem('userType')));
+        this.productService.getBasketByUserId(userId).subscribe((resp : Basket[]) => {this.basketItems = resp
             console.log(this.basketItems)
             this.loadCart();
-
         })
+        // this.productService.getBasketData().subscribe((resp : Basket[]) => {this.basketItems = resp
+        //     console.log(this.basketItems)
+        //     this.loadCart();
+        //
+        // })
 
     }
 
@@ -118,6 +123,7 @@ export class CardComponent implements OnInit{
              (error:HttpErrorResponse) => {
                  alert(error.message)
              }
+
          )
      }
 

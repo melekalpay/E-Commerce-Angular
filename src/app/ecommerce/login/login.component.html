@@ -7,10 +7,12 @@
             <div class="field">
                 <label for="username">Username</label>
                 <input pInputText id="username" type="text" [(ngModel)]="username" />
+                <p-message severity="error" text="Username is required"></p-message>
             </div>
             <div class="field">
                 <label for="password">Password</label>
                 <input pInputText id="password" type="password" [(ngModel)]="password"/>
+                <p-message severity="error" text="Password is required"></p-message>
             </div>
             <p-button label="Login" (onClick)="redirectAdmin()"></p-button>
         </div>
