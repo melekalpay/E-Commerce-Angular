@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CardComponent } from './card.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {CardComponent} from './card.component';
 import {CardRoutingModule} from "./card-routing.module";
 import {DividerModule} from "primeng/divider";
 import {ButtonModule} from "primeng/button";
@@ -12,13 +12,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CheckboxModule} from "primeng/checkbox";
 import {TableModule} from "primeng/table";
 import {StockComponent} from "../stock/stock.component";
-
+import {HeaderComponent} from "../header/header.component";
 
 
 @NgModule({
-  declarations: [
-    CardComponent
-  ],
+    declarations: [
+        CardComponent
+    ],
     imports: [
         CommonModule,
         CardRoutingModule,
@@ -32,7 +32,9 @@ import {StockComponent} from "../stock/stock.component";
         FormsModule,
         CheckboxModule,
         TableModule,
-        StockComponent
+        StockComponent,
+        HeaderComponent
     ]
 })
-export class CardModule { }
+export class CardModule {
+}

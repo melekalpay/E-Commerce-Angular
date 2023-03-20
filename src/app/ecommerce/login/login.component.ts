@@ -8,7 +8,7 @@ import {User} from "../model/user";
     templateUrl: './login.component.html',
     styleUrls: ['login.css']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
     username: any;
     password: any;
@@ -16,30 +16,34 @@ export class LoginComponent implements OnInit{
     users!: User[];
 
 
-    constructor(private router: Router,private productService:ProductService) {
+    constructor(private router: Router, private productService: ProductService) {
         // @ts-ignore
-        localStorage.setItem('userType',null)
+        localStorage.setItem('userType', null)
         // @ts-ignore
-        localStorage.setItem('userTypeName',null)
+        localStorage.setItem('userTypeName', null)
     }
 
     redirectAdmin(): void {
         this.users.forEach(v => {
-            if(this.username == v.username && this.password == v.password){
+            if (this.username == v.username && this.password == v.password) {
                 console.log(v?.rol?.roleName!)
                 // @ts-ignore
-                localStorage.setItem('userType',v.id)
+                localStorage.setItem('userType', v.id)
                 // @ts-ignore
-                localStorage.setItem('userTypeName',v?.rol?.roleName!)
+                localStorage.setItem('userTypeName', v?.rol?.roleName!)
                 this.router.navigate([`${v?.rol?.roleName!}`])
             }
         })
 
     }
+
     ngOnInit(): void {
-        this.productService.getAllUsers().subscribe((resp : User[]) => this.users = resp)
+        this.productService.getAllUsers().subscribe((resp: User[]) => this.users = resp)
 
     }
 
 
+    redirectRegister() {
+        this.router.navigate(['register'])
+    }
 }

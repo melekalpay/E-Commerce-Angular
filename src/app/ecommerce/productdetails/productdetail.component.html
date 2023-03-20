@@ -1,11 +1,12 @@
-<p-menubar [model]="items">
+<!--<p-menubar [model]="items">-->
 
-    <div class="align-items-center" style="float: right ">
+<!--    <div class="align-items-center" style="float: right ">-->
 
-        <button pButton class="mr-4" icon="pi pi-fw pi-shopping-cart" (click)="redirectCard()">
-            <label class="ml-3">{{cardItem}}</label></button>
-    </div>
-</p-menubar>
+<!--        <button pButton class="mr-4" icon="pi pi-fw pi-shopping-cart" (click)="redirectCard()">-->
+<!--            <label class="ml-3">{{cardItem}}</label></button>-->
+<!--    </div>-->
+<!--</p-menubar>-->
+<app-header></app-header>
 <div class="row product-details">
     <div class="col-sm-6">
         <img [src]="urun?.image!" [alt]="urun?.image!" class="product-img" *ngIf="urun?.image!">
@@ -59,7 +60,7 @@
         </div>
     </div>
 
-    <app-comment [list2]="list1" (recursiveTetikleme)="recursive($event)"  *ngIf="list1.length>0"></app-comment>
+    <app-comment [list2]="list1" (recursiveTetikleme)="recursive($event)" *ngIf="list1.length>0"></app-comment>
 
 
 

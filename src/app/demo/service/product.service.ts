@@ -87,8 +87,8 @@ export class ProductService {
         return  this.http.delete<void>(`${this.apiUrl}basket/delete/${id}`);
     }
 
-    deleteAllBasket(basket : Basket[]) : Observable<Basket[]>{
-        return  this.http.post<Basket[]>(`${this.apiUrl}basket/delete/all`,basket);
+    deleteAllBasket(basket : Basket[]) : Observable<void>{
+        return  this.http.post<void>(`${this.apiUrl}basket/delete/all`,basket);
     }
 
     setQuantity(id: number , amount : number) :Observable<void>{

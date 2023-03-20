@@ -1,3 +1,4 @@
+<app-header></app-header>
 <section class="cart_section">
     <div class="container">
         <h2>Cart</h2>
@@ -14,41 +15,46 @@
                     *ngFor="let getCartDetail of basketItems">
 
                     <td>
-                            <img [src]="getCartDetail.product?.image!" width="100" class="shadow-4"/>
+                        <img [src]="getCartDetail.product?.image!" width="100" class="shadow-4"/>
 
                     </td>
                     <td>
-                            {{getCartDetail.product?.price!}} $
+                        {{getCartDetail.product?.price! | currency:'USD'}}
 
                     </td>
                     <td>
-                            <p-button icon="pi pi-plus"
-                                      (click)="incQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>
+                        <p-button icon="pi pi-plus"
+                                  (click)="incQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>
                         <label style="padding:10px;">{{getCartDetail.quantity}}</label>
 
-                            <p-button icon="pi pi-minus"
-                                      (click)="decQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>
+                        <p-button icon="pi pi-minus"
+                                  (click)="decQnt({prodId : getCartDetail.product?.id!, qnt : getCartDetail.quantity!})"></p-button>
 
                     </td>
                     <td>
-                            {{getCartDetail.quantity! * getCartDetail.product?.price!|number}} $
+                        {{getCartDetail.quantity! * getCartDetail.product?.price!| currency:'USD'}}
                     </td>
                     <td>
                         <p-button icon="pi pi-trash" (click)="singleDelete(getCartDetail?.id! )"></p-button>
                     </td>
                     <td>
-                        <p-button  (click)="buy(getCartDetail?.id!)" label="Buy"></p-button>
+                        <p-button (click)="buy(getCartDetail?.id!)" label="Buy"></p-button>
                     </td>
                 </tr>
             </table>
             <div class="row">
                 <div class="col-md-6">
-                    <h3>Total Price = {{total}}$</h3>
+                    <h3>Total Price = {{total | currency:'USD'}}</h3>
                 </div>
                 <div class="col-md-6 text-right">
                     <button type="button" class="removeall" (click)="removeall()"><i class="fa fa-trash"></i>Remove All
                         Item
                     </button>
+                </div>
+                <div>
+                    <p-button (click)="buyAll()"><i class="fa fa-trash"></i>Buy All
+                        Item
+                    </p-button>
                 </div>
             </div>
         </div>

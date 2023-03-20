@@ -14,7 +14,7 @@ export class UserGuard implements CanActivate {
         if(this.authservice.userAuth()){
             return true;
         }
-        this.router.navigate(['']);
+        this.router.navigate(['login']);
         return false;
     }
 

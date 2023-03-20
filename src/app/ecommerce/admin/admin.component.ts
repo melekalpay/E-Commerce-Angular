@@ -1,9 +1,8 @@
-import {AfterContentChecked, Component, DoCheck, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../demo/service/product.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {Urun} from "../model/urun";
 import {Router} from "@angular/router";
-import {Product} from "../../demo/api/product";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
@@ -18,7 +17,7 @@ import {HttpErrorResponse} from "@angular/common/http";
     `],
     providers: [MessageService, ConfirmationService]
 })
-export class AdminComponent implements OnInit{
+export class AdminComponent implements OnInit {
     product!: Urun;
     submitted!: boolean;
     productDialog!: boolean;
@@ -30,7 +29,7 @@ export class AdminComponent implements OnInit{
     }
 
     ngOnInit() {
-        this.productService.getMysqlData().subscribe((resp : Urun[]) => this.products = resp)
+        this.productService.getMysqlData().subscribe((resp: Urun[]) => this.products = resp)
 
     }
 
@@ -47,9 +46,9 @@ export class AdminComponent implements OnInit{
 
     public saveProducts(): void {
         this.submitted = true;
-            this.productService.saveData(this.product).subscribe((data:  any) => {
-                console.log(data)
-            });
+        this.productService.saveData(this.product).subscribe((data: any) => {
+            console.log(data)
+        });
         this.productDialog = false;
     }
 
@@ -62,17 +61,17 @@ export class AdminComponent implements OnInit{
         this.productDialog = true;
     }
 
-    getProducts() : void {
-        this.productService.getMysqlData().subscribe((resp : Urun[]) => this.products = resp)
+    getProducts(): void {
+        this.productService.getMysqlData().subscribe((resp: Urun[]) => this.products = resp)
     }
 
     delete(id: number) {
         this.productService.deleteData(id).subscribe(
-            (response : void) => {
+            (response: void) => {
                 console.log(response)
                 this.getProducts();
             },
-            (error:HttpErrorResponse) => {
+            (error: HttpErrorResponse) => {
                 alert(error.message)
             }
         )

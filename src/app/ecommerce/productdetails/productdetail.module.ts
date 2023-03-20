@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {DividerModule} from "primeng/divider";
 import {ButtonModule} from "primeng/button";
 import {ChipsModule} from "primeng/chips";
@@ -20,12 +20,10 @@ import {RippleModule} from "primeng/ripple";
 import {CardModule} from "primeng/card";
 
 
-
-
 @NgModule({
-  declarations: [
-    ProductDetailComponent
-  ],
+    declarations: [
+        ProductDetailComponent
+    ],
     imports: [
         CommonModule,
         ProductDetailRoutingModule,
@@ -48,4 +46,5 @@ import {CardModule} from "primeng/card";
         CardModule
     ]
 })
-export class ProductDetailModule { }
+export class ProductDetailModule {
+}

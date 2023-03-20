@@ -3,11 +3,12 @@ import {Component, OnInit} from '@angular/core';
 @Component({
     selector: 'app-stock',
     templateUrl: './stock.component.html',
-    standalone:true
+    standalone: true
 })
-export class StockComponent implements OnInit{
+export class StockComponent implements OnInit {
 
-    stock : string = "INSTOCK"
+    stock: string = "INSTOCK"
+
     ngOnInit(): void {
     }
 

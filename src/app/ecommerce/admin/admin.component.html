@@ -36,10 +36,12 @@
                 <td><img [src]="product.image" [alt]="product.name" width="100" class="shadow-4"/></td>
                 <td>{{product.price | currency:'USD'}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(product.id)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                            (click)="delete(product.id)"></button>
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                            (click)="editProduct(product)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -67,7 +69,7 @@
 
         <div class="field">
             <label for="price">Price</label>
-            <input id="price"  pInputText type="number" [(ngModel)]="product.price" mode="currency" currency="USD"
+            <input id="price" pInputText type="number" [(ngModel)]="product.price" mode="currency" currency="USD"
                    locale="en-US"/>
         </div>
         <div class="field">

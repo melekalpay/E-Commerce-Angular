@@ -1,9 +1,13 @@
 <p-menubar [model]="items">
-
+    <ng-template pTemplate="start">
+        <i class="pi pi-user ml-5" style="font-size: 2rem;color:purple;"></i>
+        <label class="ml-5 mr-5"> WELCOME , {{username | uppercase}} </label>
+    </ng-template>
     <div class="align-items-center" style="float: right ">
-
-        <button pButton class="mr-4" icon="pi pi-fw pi-shopping-cart">
-            <label class="ml-3">{{cardItem}}</label></button>
+        <button pButton label="Products" icon="pi pi-heart" class="mr-5" (click)="GoToProducts()"></button>
+        <button pButton label="Logout" icon="pi pi-power-off" class="mr-5" (click)="GoToLogin()"></button>
+        <i class="pi pi-fw pi-shopping-cart mr-5 p-text-secondary" (click)="redirectCard()" pBadge
+           style="font-size: 2rem" [value]="cardItem"></i>
     </div>
 </p-menubar>
 

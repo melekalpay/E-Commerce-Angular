@@ -7,27 +7,31 @@ import {HttpErrorResponse} from "@angular/common/http";
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
-    styleUrls : ['register.css']
+    styleUrls: ['register.css']
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
     username?: string;
     password?: string;
-    user! : User;
+    user!: User;
 
-    constructor(private productService:ProductService,private router:Router) {
+    constructor(private productService: ProductService, private router: Router) {
     }
+
     ngOnInit(): void {
 
     }
 
-
     register() {
-        this.productService.saveUser(this.username! ,this.password!).subscribe(  (response : User) => {
+        this.productService.saveUser(this.username!, this.password!).subscribe((response: User) => {
                 console.log(response)
             },
-            (error:HttpErrorResponse) => {
+            (error: HttpErrorResponse) => {
                 alert(error.message)
             })
         this.router.navigate(['login'])
+    }
+
+    redirectLogin() {
+        this.router.navigate(['login']);
     }
 }

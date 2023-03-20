@@ -1,31 +1,15 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    DoCheck,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewChild
-} from '@angular/core';
-import {FormGroup, FormControl, Validators} from "@angular/forms";
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {Product} from "../../demo/api/product";
 import {ProductService} from "../../demo/service/product.service";
 import {Urun} from "../model/urun";
-import {J} from "@angular/cdk/keycodes";
-import {AuthService} from "../../auth/auth.service";
 import {Basket} from "../model/basket";
-import {log10} from "chart.js/helpers";
-import {SelectItem} from "primeng/api";
-import {CardComponent} from "../shoppingcard/card.component";
+import {CartService} from "../../demo/service/cart.service";
 
 @Component({
     selector: 'app-user',
     templateUrl: './user.component.html'
 })
-export class UserComponent implements OnInit,AfterViewInit {
+export class UserComponent implements OnInit, AfterViewInit {
 
     sortOrder!: number;
 
@@ -36,23 +20,31 @@ export class UserComponent implements OnInit,AfterViewInit {
 
     items: any = [];
 
+    basketItems!: Basket[];
 
 
-
-    constructor(private productService: ProductService, private router: Router,private cd:ChangeDetectorRef) {
+    constructor(private productService: ProductService, private router: Router, private cd: ChangeDetectorRef, private cartService: CartService) {
     }
-
 
 
     ngOnInit() {
-        this.productService.getMysqlData().subscribe((resp : Urun[]) => this.products = resp)
-
+        this.productService.getMysqlData().subscribe((resp: Urun[]) => this.products = resp)
+        // @ts-ignore
+        let userId = Number(JSON.parse(localStorage.getItem('userType')));
+        this.productService.getBasketByUserId(userId).subscribe((resp: Basket[]) => {
+            this.basketItems = resp
+            console.log(this.basketItems)
+            let count = {
+                count: this.basketItems.length
+            }
+            this.cartService.setCart(count);
+        })
 
     }
 
 
-    GoToProduct(product : any) {
-        this.router.navigate(['product',product.id]);
+    GoToProduct(product: any) {
+        this.router.navigate(['product', product.id]);
     }
 
     ngAfterViewInit(): void {

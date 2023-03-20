@@ -10,6 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {User} from "../model/user";
 import {CardModule} from "primeng/card";
 import {Router} from "@angular/router";
+import {RippleModule} from "primeng/ripple";
 
 
 @Component({
@@ -24,32 +25,32 @@ import {Router} from "@angular/router";
         ChipsModule,
         FormsModule,
         JsonPipe,
-        CardModule
+        CardModule,
+        RippleModule
     ],
     standalone: true
 })
-export class CommentComponent implements OnInit{
-    @Input() list2! : any[];
-    @Output()  recursiveTetikleme = new EventEmitter<number>();
+export class CommentComponent implements OnInit {
+    @Input() list2!: any[];
+    @Output() recursiveTetikleme = new EventEmitter<number>();
 
 
     display: boolean = false;
 
-    replay : Comment = {};
+    replay: Comment = {};
 
-    text! : string;
+    text!: string;
 
     user!: User;
     selcom!: Comment;
 
-    showDialog(comment : any) {
+    showDialog(comment: any) {
         console.log(comment)
         this.selcom = comment;
         this.display = true;
     }
 
-
-    constructor(private productService:ProductService,private router:Router) {
+    constructor(private productService: ProductService, private router: Router) {
 
     }
 
@@ -57,7 +58,7 @@ export class CommentComponent implements OnInit{
         // @ts-ignore
         let userId = Number(JSON.parse(localStorage.getItem('userType')));
 
-        this.productService.getUserById(userId).subscribe(v=>{
+        this.productService.getUserById(userId).subscribe(v => {
             this.user = v;
         });
 
@@ -68,16 +69,20 @@ export class CommentComponent implements OnInit{
         console.log(this.selcom)
         this.replay.parent = this.selcom.id;
         this.replay.user = this.user;
-        this.replay.comment= this.text;
-        this.replay.product=this.selcom.product;
+        this.replay.comment = this.text;
+        this.replay.product = this.selcom.product;
 
         this.productService.saveComment(this.replay).subscribe(
-            v=>{},
-            error => {},
-            (complete:void) =>{this.recursiveTetikleme.emit(this.selcom.product?.id)}
+            v => {
+            },
+            error => {
+            },
+            (complete: void) => {
+                this.recursiveTetikleme.emit(this.selcom.product?.id)
+            }
         )
 
-        this.display=false;
+        this.display = false;
 
     }
 }

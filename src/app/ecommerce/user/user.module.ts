@@ -19,6 +19,7 @@ import {DataViewModule} from "primeng/dataview";
 import {DropdownModule} from "primeng/dropdown";
 import {ImageModule} from "primeng/image";
 import {StockComponent} from "../stock/stock.component";
+import {HeaderComponent} from "../header/header.component";
 
 
 
@@ -49,7 +50,8 @@ import {StockComponent} from "../stock/stock.component";
         DataViewModule,
         DropdownModule,
         ImageModule,
-        StockComponent
+        StockComponent,
+        HeaderComponent
     ]
 })
 export class UserModule { }
