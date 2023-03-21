@@ -49,6 +49,8 @@ export class HeaderComponent implements OnInit {
     }
 
     GoToLogin() {
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('token');
         this.router.navigate(['login']);
     }
 

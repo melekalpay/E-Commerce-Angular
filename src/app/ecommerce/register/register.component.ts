@@ -10,8 +10,8 @@ import {HttpErrorResponse} from "@angular/common/http";
     styleUrls: ['register.css']
 })
 export class RegisterComponent implements OnInit {
-    username?: string;
-    password?: string;
+    username!: string;
+    password!: string;
     user!: User;
 
     constructor(private productService: ProductService, private router: Router) {
@@ -20,15 +20,30 @@ export class RegisterComponent implements OnInit {
     ngOnInit(): void {
 
     }
+    authRequest:any= {
+        "userName" : `"${this.username}"`,
+        "password" : `"${this.password}"`
+    }
 
     register() {
-        this.productService.saveUser(this.username!, this.password!).subscribe((response: User) => {
-                console.log(response)
-            },
-            (error: HttpErrorResponse) => {
-                alert(error.message)
+
+       let  authRequest= {
+            "userName" : this.username,
+            "password" : this.password
+        }
+
+        // this.productService.saveUser(this.username!, this.password!).subscribe((response: User) => {
+        //         console.log(response)
+        //     },
+        //     (error: HttpErrorResponse) => {
+        //         alert(error.message)
+        //     })
+        if(this.username !== '' && this.username !== null && this.password !== '' && this.password !== null ){
+            this.productService.generateToken(authRequest).subscribe(value => {
+                console.log("token",value)
             })
-        this.router.navigate(['login'])
+            this.router.navigate(['login'])
+        }
     }
 
     redirectLogin() {

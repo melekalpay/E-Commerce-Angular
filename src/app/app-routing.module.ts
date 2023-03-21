@@ -17,22 +17,22 @@ import {UserGuard} from "./auth/user.guard";
                     },
                     {
                         path: 'admin',
-                        canActivate: [AdminGuard],
+                        canActivate : [AdminGuard],
                         loadChildren: () => import('./ecommerce/admin/admin.module').then(m => m.AdminModule)
                     },
                     {
                         path: 'user',
-                        canActivate: [UserGuard],
+                        canActivate:[UserGuard],
                         loadChildren: () => import('./ecommerce/user/user.module').then(m => m.UserModule)
                     },
                     {
                         path: 'card',
-                        canActivate: [UserGuard],
+                        canActivate:[UserGuard],
                         loadChildren: () => import('./ecommerce/shoppingcard/card.module').then(m => m.CardModule)
                     },
                     {
                         path: 'product/:id',
-                        canActivate: [UserGuard],
+                        canActivate:[UserGuard],
                         loadChildren: () => import('./ecommerce/productdetails/productdetail.module').then(m => m.ProductDetailModule)
                     },
                     {

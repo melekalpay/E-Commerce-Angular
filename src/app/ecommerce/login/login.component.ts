@@ -15,6 +15,12 @@ export class LoginComponent implements OnInit {
 
     users!: User[];
 
+    tokens: any = {};
+
+    accessToken!: any;
+
+    keysArray: any[] = [];
+
 
     constructor(private router: Router, private productService: ProductService) {
         // @ts-ignore
@@ -24,16 +30,37 @@ export class LoginComponent implements OnInit {
     }
 
     redirectAdmin(): void {
-        this.users.forEach(v => {
-            if (this.username == v.username && this.password == v.password) {
-                console.log(v?.rol?.roleName!)
-                // @ts-ignore
-                localStorage.setItem('userType', v.id)
-                // @ts-ignore
-                localStorage.setItem('userTypeName', v?.rol?.roleName!)
-                this.router.navigate([`${v?.rol?.roleName!}`])
-            }
-        })
+
+        let authRequest = {
+            "userName": this.username,
+            "password": this.password
+        }
+
+        if (this.username !== '' && this.username !== null && this.password !== '' && this.password !== null) {
+            this.productService.generateTokenLogin(authRequest).subscribe(value => {
+                console.log(value)
+                this.tokens = value;
+                this.accessToken = JSON.parse(value.toString());
+                console.log("json", this.accessToken.accessToken)
+                sessionStorage.setItem("token", this.accessToken.accessToken)
+                sessionStorage.setItem("username", authRequest.userName)
+                if (sessionStorage.getItem("token") && sessionStorage.getItem("username")) {
+                    this.users.forEach(v => {
+                        console.log(v?.rol?.roleName!)
+                        // @ts-ignore
+                        localStorage.setItem('userType', v.id)
+                        // @ts-ignore
+                        localStorage.setItem('userTypeName', v?.rol?.roleName!)
+                        this.router.navigate([`${v?.rol?.roleName!}`])
+                    })
+                }
+
+            })
+
+        }else {
+            alert("Username veya password boş olamaz.")
+        }
+
 
     }
 
