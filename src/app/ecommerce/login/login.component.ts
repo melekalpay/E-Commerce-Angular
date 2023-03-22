@@ -44,16 +44,17 @@ export class LoginComponent implements OnInit {
                 console.log("json", this.accessToken.accessToken)
                 sessionStorage.setItem("token", this.accessToken.accessToken)
                 sessionStorage.setItem("username", authRequest.userName)
-                if (sessionStorage.getItem("token") && sessionStorage.getItem("username")) {
                     this.users.forEach(v => {
-                        console.log(v?.rol?.roleName!)
-                        // @ts-ignore
-                        localStorage.setItem('userType', v.id)
-                        // @ts-ignore
-                        localStorage.setItem('userTypeName', v?.rol?.roleName!)
-                        this.router.navigate([`${v?.rol?.roleName!}`])
+                        console.log("this.users",this.users)
+                        if(v.username === this.username){
+                            console.log("rolename",v?.rol?.roleName!)
+                            // @ts-ignore
+                            localStorage.setItem('userType', v.id)
+                            // @ts-ignore
+                            localStorage.setItem('userTypeName', v?.rol?.roleName!)
+                            this.router.navigate([`${v?.rol?.roleName!}`])
+                        }
                     })
-                }
 
             })
 
@@ -66,7 +67,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.productService.getAllUsers().subscribe((resp: User[]) => this.users = resp)
-
     }
 
 
